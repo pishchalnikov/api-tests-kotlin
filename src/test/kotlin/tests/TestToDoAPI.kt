@@ -50,4 +50,21 @@ class TestToDoAPI : BaseCase() {
                     .getObject(".", ToDo::class.java)
         assertEquals(expectedToDo, todo)
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = [1])
+    fun getToDoByUserIDTest(userID: Int) {
+        val actualToDos = given()
+            .`when`()
+                .get("$ToDosURL?userId=$userID")
+            .then()
+                .statusCode(200)
+            .extract()
+                .body()
+                .jsonPath()
+                .getList(".", ToDo::class.java)
+        actualToDos.forEach {todo ->
+            assertEquals(userID, todo.userID)
+        }
+    }
 }
