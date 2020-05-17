@@ -67,4 +67,21 @@ class TestToDoAPI : BaseCase() {
             assertEquals(userID, todo.userID)
         }
     }
+
+    @ParameterizedTest
+    @ValueSource(booleans = [true, false])
+    fun getToDoByCompletedTest(completed: Boolean) {
+        val actualToDos = given()
+            .`when`()
+                .get("$ToDosURL?completed=$completed")
+            .then()
+                .statusCode(200)
+            .extract()
+                .body()
+                .jsonPath()
+                .getList(".", ToDo::class.java)
+        actualToDos.forEach {todo ->
+            assertEquals(completed, todo.completed)
+        }
+    }
 }
