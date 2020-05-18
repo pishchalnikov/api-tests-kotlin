@@ -84,4 +84,21 @@ class TestToDoAPI : BaseCase() {
             assertEquals(completed, todo.completed)
         }
     }
+
+    @ParameterizedTest
+    @MethodSource("todoProvider")
+    fun getToDoByTitleTest(expectedToDo: ToDo) {
+        val actualToDos = given()
+            .`when`()
+                .get("$ToDosURL?title=${expectedToDo.title}")
+            .then()
+                .statusCode(200)
+            .extract()
+                .body()
+                .jsonPath()
+                .getList(".", ToDo::class.java)
+        actualToDos.forEach {todo ->
+            assertEquals(expectedToDo, todo)
+        }
+    }
 }
