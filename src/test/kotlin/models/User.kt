@@ -11,6 +11,9 @@ data class User(
         @JsonProperty("name")
         val name: String,
 
+        @JsonProperty("username")
+        val username: String,
+
         @JsonProperty("email")
         val email: String,
 
