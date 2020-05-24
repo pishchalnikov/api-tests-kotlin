@@ -5,7 +5,9 @@ import io.restassured.RestAssured.given
 import models.User
 import models.usersURL
 import org.hamcrest.CoreMatchers.equalTo
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
 import java.util.stream.Stream
 
@@ -49,5 +51,20 @@ class TestUserAPI : BaseCase() {
         .then()
                 .statusCode(200)
                 .body("$.size()", equalTo(size))
+    }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    fun getUserByIDTest(expectedUser: User) {
+        val user = given()
+            .`when`()
+                .get("$usersURL/${expectedUser.id}")
+            .then()
+                .statusCode(200)
+            .extract()
+                .body()
+                .jsonPath()
+                .getObject(".", User::class.java)
+        Assertions.assertEquals(expectedUser, user)
     }
 }
