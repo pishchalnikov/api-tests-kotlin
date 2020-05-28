@@ -99,4 +99,20 @@ class TestUserAPI : BaseCase() {
                 .first()
         Assertions.assertEquals(expectedUser, user)
     }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    fun getUserByPhoneTest(expectedUser: User) {
+        val user = given()
+            .`when`()
+                .get("$usersURL?phone=${expectedUser.phone}")
+            .then()
+                .statusCode(200)
+            .extract()
+                .body()
+                .jsonPath()
+                .getList(".", User::class.java)
+                .first()
+        Assertions.assertEquals(expectedUser, user)
+    }
 }
