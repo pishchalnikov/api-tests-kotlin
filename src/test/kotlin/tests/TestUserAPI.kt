@@ -115,4 +115,20 @@ class TestUserAPI : BaseCase() {
                 .first()
         Assertions.assertEquals(expectedUser, user)
     }
+
+    @ParameterizedTest
+    @MethodSource("userProvider")
+    fun getUserByWebsiteTest(expectedUser: User) {
+        val user = given()
+            .`when`()
+                .get("$usersURL?website=${expectedUser.website}")
+            .then()
+                .statusCode(200)
+            .extract()
+                .body()
+                .jsonPath()
+                .getList(".", User::class.java)
+                .first()
+        Assertions.assertEquals(expectedUser, user)
+    }
 }
