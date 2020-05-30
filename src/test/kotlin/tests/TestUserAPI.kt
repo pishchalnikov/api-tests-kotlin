@@ -2,6 +2,7 @@ package tests
 
 import base.BaseCase
 import io.restassured.RestAssured.given
+import java.util.stream.Stream
 import models.User
 import models.usersURL
 import org.hamcrest.CoreMatchers.equalTo
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
-import java.util.stream.Stream
 
 class TestUserAPI : BaseCase() {
 

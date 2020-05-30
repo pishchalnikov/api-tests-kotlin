@@ -2,6 +2,7 @@ package tests
 
 import base.BaseCase
 import io.restassured.RestAssured.given
+import java.util.stream.Stream
 import models.ToDo
 import models.ToDosURL
 import org.hamcrest.CoreMatchers.equalTo
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import org.junit.jupiter.params.provider.ValueSource
-import java.util.stream.Stream
 
 class TestToDoAPI : BaseCase() {
 
@@ -63,7 +63,7 @@ class TestToDoAPI : BaseCase() {
                 .body()
                 .jsonPath()
                 .getList(".", ToDo::class.java)
-        actualToDos.forEach {todo ->
+        actualToDos.forEach { todo ->
             assertEquals(userID, todo.userID)
         }
     }
@@ -80,7 +80,7 @@ class TestToDoAPI : BaseCase() {
                 .body()
                 .jsonPath()
                 .getList(".", ToDo::class.java)
-        actualToDos.forEach {todo ->
+        actualToDos.forEach { todo ->
             assertEquals(completed, todo.completed)
         }
     }
@@ -97,7 +97,7 @@ class TestToDoAPI : BaseCase() {
                 .body()
                 .jsonPath()
                 .getList(".", ToDo::class.java)
-        actualToDos.forEach {todo ->
+        actualToDos.forEach { todo ->
             assertEquals(expectedToDo, todo)
         }
     }
