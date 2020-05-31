@@ -17,3 +17,9 @@ Run tests:
 ```bash
 $ ./gradlew test
 ```
+
+Run tests in Docker:
+```bash
+$ docker build --tag api-tests-kotlin .
+$ docker run api-tests-kotlin
+```
